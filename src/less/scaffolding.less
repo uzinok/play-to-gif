@@ -7,51 +7,76 @@ img {
   max-width: 100%;
 }
 
+// обвертка
 .play-gif-wrap {
+  // для позиционирования фона и кнопки
   position: relative;
+  // что бы не ломать верстку
   display: inline-block;
 
+  // затемение фона
   &::before {
     content: '';
     display: block;
+    // позиционируем на всю высоту и ширину блока/картинки
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    // затемняем картинку прозрачным фоном
     background-color: rgba(0, 0, 0, 45%);
   }
 
+  // кнопка запуска анимации
   & button {
+    // сбрасываем стили по умолчанию
     appearance: none;
     border: none;
     box-shadow: none;
     background-color: transparent;
     margin: 0;
     padding: 0;
+    // позиционируем по центру родителя
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    // размеры
     width: 90px;
     height: 90px;
+    // иконка "play"
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 510 510'%3e%3cpath fill='%23fff' d='M204 369.75L357 255 204 140.25v229.5zM255 0C114.75 0 0 114.75 0 255s114.75 255 255 255 255-114.75 255-255S395.25 0 255 0zm0 459c-112.2 0-204-91.8-204-204S142.8 51 255 51s204 91.8 204 204-91.8 204-204 204z'/%3e%3c/svg%3e");
+    // делаем размер иконки что бы не вылазила за пределы кнопки
     background-size: contain;
+    // отменяем повтор
+    background-repeat: no-repeat;
+    // ставим иконку по центру
+    background-position: center;
+    // для :hover добавляем анимацию
     transition: transform 0.1s cubic-bezier(0.0, 0.0, 0.2, 1);
 
+    // при наведении
     &:hover {
+      // увеличиваем кнопку
       transform: translate(-50%, -50%) scale(1.05);
     }
   }
 
+  // когда идет загрузка
   &--loading::before {
+    // добавляем фоновую картинку ожидания
     background-image: url(../img/gif-loading.gif);
+    // отменяем повтор
     background-repeat: no-repeat;
+    // устанавливаем по центру
     background-position: center;
   }
 
 }
 
+// что бы не ломать верстку 
 .play-gif--wrap {
+  // обвертку делаем строчной
   display: inline;
 }
