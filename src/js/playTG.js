@@ -30,17 +30,19 @@ window.onload = function () {
                     // удаляем атрибут data-src
                     element.removeAttribute('data-srcset');
                 }
-                // удаляем кноку
-                div.querySelector('button').remove();
+                // удаляем кноку устаревшим способом для кроссбраузерности
+                div.removeChild(div.querySelector('button'));
                 // показываем пользователю что идет загрузка анимации
                 div.classList.add('play-gif-wrap--loading');
 
                 // по завершению загрузки анимации
                 element.onload = function () {
                     // убираем затемненый, прозрачный фон
-                    div.classList.add('play-gif--wrap');
-                    // делаем обвертку просто инлайновой
                     div.classList.remove('play-gif-wrap');
+                    // убираем анимацию загрузки
+                    div.classList.remove('play-gif-wrap--loading');
+                    // делаем обвертку просто инлайновой
+                    div.classList.add('play-gif--wrap');
                 };
             }
         });

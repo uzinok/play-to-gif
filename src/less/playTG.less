@@ -1,12 +1,3 @@
-body {
-  margin: 0;
-  padding: 0;
-}
-
-img {
-  max-width: 100%;
-}
-
 // обвертка
 .play-gif-wrap {
   // для позиционирования фона и кнопки
@@ -37,6 +28,8 @@ img {
     background-color: transparent;
     margin: 0;
     padding: 0;
+    // скругляем углы, что бы кнопка действительно была кругля
+    border-radius: 50%;
     // позиционируем по центру родителя
     position: absolute;
     top: 50%;
@@ -63,16 +56,37 @@ img {
     }
   }
 
-  // когда идет загрузка
-  &--loading::before {
-    // добавляем фоновую картинку ожидания
-    background-image: url(../img/gif-loading.gif);
-    // отменяем повтор
-    background-repeat: no-repeat;
-    // устанавливаем по центру
-    background-position: center;
+  // во время загрузки с помошью псевдоэлемента сознаем полукольцо
+  &--loading::after {
+    content: '';
+    display: block;
+    border: 7px solid #fff;
+    border-bottom-color: transparent;
+    box-sizing: border-box;
+    border-radius: 50%;
+    // позиционируем кольцо по центру
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    // transform можно пропустить
+    transform: translate(-50%, -50%);
+    // размеры полукольца
+    width: 90px;
+    height: 90px;
+    animation: play-gif-loading 1.8s cubic-bezier(0.6, 0.3, 0.3, 0.6) infinite;
   }
 
+}
+
+// анимация вращения кольца
+@keyframes play-gif-loading {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 // что бы не ломать верстку 

@@ -4,13 +4,13 @@ var gulp = require("gulp"),
 
 gulp.task("js", function () {
   return gulp.src("src/js/*.js")
-    .pipe(concat("main.js", {
+    .pipe(concat("playTG.js", {
       newLine: ";"
     }))
     .pipe(minify({
       ext: {
-        src: '-debug.js',
-        min: '.js'
+        src: '.js',
+        min: '.min.js'
       },
       exclude: ['tasks']
     }))
