@@ -1,67 +1,61 @@
 window.onload = function () {
+
     // play-gif-wrap play-gif-wrap--loading
-    var picture = document.querySelectorAll('.play-gif');
+    
+    // выбираем все необходимые изображения
+    var picture = document.querySelectorAll('img.play-gif');
 
+    // в цикле для каждого изображения вызываем необходимую функцию
     for (var i = 0; i < picture.length; i++) {
-        if (picture[i].querySelector('img')) {
-            playGifPicture(picture[i]);
-        } else {
-            playGifImg(picture[i]);
-        }
+        // футлция отсдеживает склик по нужному элементу меняет значение атрибута src на значение атрибута data-src
+        div = createWrapButton (picture[i]);
+        playGifImg(picture[i], div);
     }
 
-    function playGifImg(element) {
-        var button;
-        if (element.querySelector('img')) {
-
-        } else {
-            var div = createDivButton(element);
-            button = div.querySelector('button');
-        }
-
-
-        button.addEventListener('click', function () {
-            div.classList.add('play-gif-wrap--loading');
-            button.remove();
-            element.src = element.getAttribute('data-src');
-            element.removeAttribute('data-src');
-
-            element.onload = function () {
-                div.classList.remove('play-gif-wrap--loading');
-                div.classList.remove('play-gif-wrap');
-                div.classList.add('play-gif--wrap');
-            };
-        });
-    }
-
-    function playGifPicture(element) {
-        playGifImg(element.querySelector('img'));
-
-        element.addEventListener('click', function () {
-            var source = element.querySelectorAll('source');
-
-            for (var i = 0; i < source.length; i++) {
-                if (source[i].getAttribute('data-srcset')) {
-                    source[i].setAttribute('srcset', source[i].getAttribute('data-srcset'));
-                    source[i].removeAttribute('data-srcset');
+    function playGifImg(element, div) {
+        // отслеживаем клик
+        div.querySelector('button').addEventListener('click', function () {
+            // если есть атрибут data-src
+            if (element.getAttribute('data-src')) {
+                // обновляем/добавляем атрибут src
+                element.src = element.getAttribute('data-src');
+                // удаляем атрибут data-src
+                element.removeAttribute('data-src');
+                // если есть атрибут data-srcset
+                if (element.getAttribute('data-srcset')) {
+                    // обновляем/добавляем атрибут srcset
+                    element.setAttribute('srcset', element.getAttribute('data-srcset'));
+                    // удаляем атрибут data-src
+                    element.removeAttribute('data-srcset');
                 }
+
+                div.querySelector('button').remove();
+                div.classList.add('play-gif-wrap--loading');
+
+                element.onload = function () {
+                    div.classList.add('play-gif--wrap');
+                    div.classList.remove('play-gif-wrap');
+                };
+
             }
         });
     }
 
-    function createDivButton(element) {
+    function createWrapButton (img) {
         var div = document.createElement('div');
         div.classList.add('play-gif-wrap');
 
+        var parentElement = img.parentNode;
+        parentElement.insertBefore(div, img);
+
+        div.appendChild(img);
+
         var button = document.createElement('button');
-        button.setAttribute('aria-label', 'Play to gif');
+        
+        button.setAttribute('aria-label', img.getAttribute('data-aria') || 'Play to gif');
 
-        element.parentNode.insertBefore(div, element);
-
-        div.appendChild(element);
         div.appendChild(button);
 
-        return button, div;
-
+        return div;
     }
 };
