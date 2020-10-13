@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="css/playTG.css">
-  <script src="http://ctr-localhost.ru/vlad/jq.js"></script>
   <style>
     body {
       margin: 0;
@@ -17,6 +16,9 @@
 
 <body>
 
+
+  <h1>Как выглядит элемент в каждом состоянии</h1>
+
   <div class="play-gif-wrap">
     <img src="./img/250.jpg" alt="animation">
     <button aria-label="Play to gif"></button>
@@ -26,21 +28,21 @@
     <img src="./img/250.jpg" alt="animation">
   </div>
 
-  <img class="play-gif" src="./img/250.jpg" data-src="./img/250.gif"
-    data-srcset="./img/250.gif 1x, ./img/250.gif?2x 2x" alt="animation" data-aria="Запустить анимацию">
+  <div class="play-gif--wrap">
+    <img src="./img/250.gif" alt="animation" data-aria="Запустить анимацию" srcset="./img/250.gif 1x, ./img/250.gif?2x 2x">
+  </div>
 
-    <hr>
+  <hr>
+
+  <h2>Демо</h2>
+<h3>img</h3>
+  <img class="play-gif" src="./img/250.jpg" data-src="./img/250.gif" data-srcset="./img/250.gif 1x, ./img/250.gif?2x 2x" alt="animation" data-aria="Запустить анимацию">
+
+    <h3>picture</h3>
 
     <picture class="play-gif">
       <source media="(min-width: 1200px)" srcset="./img/700.jpg" data-srcset="./img/700.gif">
-  
-      <img src="./img/250.jpg" data-src="./img/250.gif" alt="animation">
-    </picture>
-
-    <picture class="play-gif">
-      <source media="(min-width: 1200px)" srcset="./img/700.jpg" data-srcset="./img/700.gif">
-  
-      <img src="./img/250.jpg" data-src="./img/250.gif" alt="animation" data-aria="Запустить анимацию">
+      <img src="./img/250.jpg" data-src="./img/250.gif" data-srcset="./img/250.gif 1x, ./img/250.gif?2x 2x" alt="animation" data-aria="Запустить анимацию">
     </picture>
 
   <script src="./js/playTG.js"></script>
