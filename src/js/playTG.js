@@ -3,18 +3,26 @@ window.onload = function () {
     // play-gif-wrap play-gif-wrap--loading
 
     // выбираем все необходимые изображения
-    var picture = document.querySelectorAll('img.play-gif');
+    var picture = document.querySelectorAll('.play-gif');
 
     // в цикле для каждого изображения вызываем необходимую функцию
     for (var i = 0; i < picture.length; i++) {
-        // создаем инлайн-блок и кнопку, кнопку и изображение помещаем в инлайн блок
-        div = createWrapButton(picture[i]);
-        // футлция отсдеживает склик по нужному элементу 
-        // меняет значение атрибута src на значение атрибута data-src
-        playGifImg(picture[i], div);
+        if (picture[i].tagName == 'IMG') {
+            // создаем инлайн-блок и кнопку, кнопку и изображение помещаем в инлайн блок
+            div = createWrapButton(picture[i]);
+            // футлция отсдеживает склик по нужному элементу 
+            // меняет значение атрибута src на значение атрибута data-src
+            playGifImg(picture[i], div, false);
+        } else if (picture[i].tagName == 'PICTURE') {
+            // создаем инлайн-блок и кнопку, кнопку и изображение помещаем в инлайн блок
+            div = createButton(picture[i]);
+            // футлция отсдеживает склик по нужному элементу 
+            // меняет значение атрибута src на значение атрибута data-src
+            playGifImg(div.querySelector('img'), div, true);
+        }
     }
 
-    function playGifImg(element, div) {
+    function playGifImg(element, div, bol) {
         // отслеживаем клик
         div.querySelector('button').addEventListener('click', function () {
             // если есть атрибут data-src
@@ -44,6 +52,16 @@ window.onload = function () {
                     // делаем обвертку просто инлайновой
                     div.classList.add('play-gif--wrap');
                 };
+
+            }
+            if (bol) {
+                var sourse = div.querySelectorAll('source');
+
+                for (var i = 0; i < sourse.length; i++) {
+                    if (sourse[i].getAttribute('data-srcset')) {
+                        sourse[i].setAttribute('srcset', sourse[i].getAttribute('data-srcset'));
+                    }
+                }
             }
         });
     }
@@ -74,5 +92,20 @@ window.onload = function () {
 
         // возврашаем див для дальнейшей работы
         return div;
+    }
+
+    function createButton(picture) {
+        picture.classList.add('play-gif-wrap');
+
+        // создаем кнопку
+        var button = document.createElement('button');
+
+        // добавляем для доступности aria-label
+        button.setAttribute('aria-label', picture.querySelector('img').getAttribute('data-aria') || 'Play to gif');
+
+        // в div вставляем кнопку
+        picture.appendChild(button);
+
+        return picture;
     }
 };
